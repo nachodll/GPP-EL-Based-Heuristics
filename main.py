@@ -7,18 +7,17 @@ def main():
                  'G250.04', 'G250.08',
                  'G500.01', 'U500.05',
                  'G1000.01', 'U1000.05']
-
-    algorithms = ['BF', 'G', 'EBF', 'EG']
-
     ks = [2, 3, 4]
-
+    algorithms = ['BF', 'G', 
+                  'EBF', 'EG', 
+                  'PNEBF', 'PNG']
     reps = 10
 
-    for instance in instances[6:]:
+    for instance in instances:
         filename = 'Johnson/' + instance
         for k in ks:
             gpp = GPP.GPP(filename, k)
-            for algo in algorithms[:2]:
+            for algo in algorithms:
                 for i in range(reps):
                     gpp.solve(algo)
 
