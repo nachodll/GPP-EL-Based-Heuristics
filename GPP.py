@@ -11,10 +11,11 @@ class GPP:
         self.k = k
         self.n = self.G[0][0]+1
         self.num_edges = self.G[0][1]+1
+        self.avg = self.avg_f()
         self.num_evals = 0
         self.num_steps = 0
         self.print_rate = 1
-        self.verbose = True
+        self.verbose = False
 
         # set max_evals relative to n
         if self.n <= 500:
@@ -76,7 +77,7 @@ class GPP:
         fx = self.f(x)
         c = 2 * (self.n - 1)
         d =((self.k - 1) * self.n**2) / (2*self.k)
-        avg = fx + (c/d) * (self.avg_f() - fx)
+        avg = fx + (c/d) * (self.avg() - fx)
         return avg
 
 
@@ -130,6 +131,33 @@ class GPP:
             x += [i]*int(self.n/self.k)
         random.shuffle(x)
         return x
+
+
+    def random_neighbor (self, x):
+        """Returns a random exchange neighbor in N(x)""" 
+
+        i = random.randint(0, self.n-1)
+        j = random.randint(0, self.n-1)
+        while x[i] == x[j]:
+            j = random.randint(0, self.n-1)
+        x[i], x[j] = x[j], x[i]
+        return x
+
+
+    def random_sample_partial_neighborhood (self, x):
+
+        vnc = self.vertices_no_cut(x)
+        samples = []
+        for c in range(self.n):
+            i = random.randint(0, self.n-1)
+            j = random.randint(0, self.n-1)
+            while x[i] == x[j] and not(any(i in l for l in vnc) or any(j in l for l in vnc)):
+                j = random.randint(0, self.n-1)
+            y = x.copy()
+            y[i], y[j] = y[j], y[i]
+            samples.append(y)
+
+        return samples
 
 
     def vertices_no_cut (self, x):
@@ -270,6 +298,65 @@ class GPP:
         return best
 
 
+    def elementary_sampling(self, x):
+        """If f(x) is greater than avg_f, we sample 100n neighbors
+        and take the best, if not we take the first improving"""
+
+        fx = self.f(x)
+        if (fx > self.avg):
+            best = x
+            fbest = fx
+            for _ in range(100*self.n):
+                y = self.random_neighbor(x)
+                fy = self.f(y)
+                if fy < fbest:
+                    best = y
+                    fbest = fy
+            y = best
+        else:
+            y = self.first_improvement(x)
+
+        if y == x:
+            print('bro pilla mas samples')
+
+        return y
+
+
+    def elementary_pn_sampling(self, x):
+        """If f(x) is greater than avg_f, we sample 100n neighbors
+        and take the best, if not we take the first improving"""
+
+        fx = self.f(x)
+        if (fx > self.avg):
+            # If f(x) > f_avg we take the best in 100*n samples
+            best = x
+            fbest = fx
+            for _ in range(100*self.n):
+                y = self.random_neighbor(x)
+                fy = self.f(y)
+                if fy < fbest:
+                    best = y
+                    fbest = fy
+            y = best
+        else:
+            if fx > self.avg_f_partial_neighborhood(x):
+                best = x
+                fbest = fx
+                for y in self.random_sample_partial_neighborhood(x):
+                    fy = self.f(y)
+                    if fy < fbest:
+                        best = y
+                        fbest = fy
+                y = best
+            else:
+                y = self.first_improvement(x)
+
+        if y == x:
+            print('bro pilla mas samples')
+
+        return y
+
+
     def solve (self, algorithm):
         """Use a specified algorithm to find a
         solution for the gpp instance"""
@@ -293,12 +380,12 @@ class GPP:
             elif algorithm == 'EG':
                 # ELEMENTARY GREEDY search
                 y = self.best_neighborhood_improvement(x)
-            elif algorithm == 'PNEBF':
-                # PARTIAL NEIGHBORHOOD ELEMENTARY BEST FIRST search
-                y = self.first_partial_neighborhood_improvement(x)
-            elif algorithm == 'PNG':
-                # PARTIAL NEIGHBORHOOD ELEMENTARY BEST FIRST search
-                y = self.best_partial_neighborhood_improvement(x)
+            elif algorithm == 'ES':
+                # ELEMENTARY SAMPLING search
+                y = self.elementary_sampling(x)
+            elif algorithm == 'EPNES':
+                # ELEMENTARY PARTIAL NEIGHBORHOOD SAMPLING search
+                y = self.elementary_pn_sampling(x)
             if not y:
                 break
             x = y

@@ -10,7 +10,7 @@ def main():
     ks = [2, 3, 4]
     algorithms = ['BF', 'G', 
                   'EBF', 'EG', 
-                  'PNEBF', 'PNG']
+                  'ES', 'EPNES']
     reps = 10
 
     for instance in instances:
