@@ -1,0 +1,6 @@
+.ipynb_checkpoints/*
+__pycache__/*
+mio.ipynb
+simple.graph
+simple.multigraph
+Walshaw/*
