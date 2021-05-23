@@ -8,13 +8,13 @@ def main():
                  'G500.01', 'U500.05',
                  'G1000.01', 'U1000.05']
 
-    algorithms = ['G', 'EBF', 'EG']
+    algorithms = ['BF', 'G', 'EBF', 'EG']
 
-    ks = [4]
+    ks = [2, 3, 4]
 
     reps = 10
 
-    for instance in instances[4:]:
+    for instance in instances[6:]:
         filename = 'Johnson/' + instance
         for k in ks:
             gpp = GPP.GPP(filename, k)
