@@ -18,7 +18,7 @@ def main():
         for k in ks:
             gpp = GPP.GPP(filename, k)
             for algo in algorithms:
-                for i in range(reps):
+                for _ in range(reps):
                     gpp.solve(algo)
 
     return

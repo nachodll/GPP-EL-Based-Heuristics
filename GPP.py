@@ -30,7 +30,7 @@ class GPP:
         if self.n%self.k !=0:
             num_empty_nodes = self.k - (self.n % self.k)
             self.n = self.n + num_empty_nodes
-            for i in range(num_empty_nodes):
+            for _ in range(num_empty_nodes):
                 self.G.append([])
 
 
@@ -77,7 +77,7 @@ class GPP:
         fx = self.f(x)
         c = 2 * (self.n - 1)
         d =((self.k - 1) * self.n**2) / (2*self.k)
-        avg = fx + (c/d) * (self.avg() - fx)
+        avg = fx + (c/d) * (self.avg - fx)
         return avg
 
 
@@ -144,11 +144,11 @@ class GPP:
         return x
 
 
-    def random_sample_partial_neighborhood (self, x):
+    def random_sample_partial_neighborhood (self, x, num_samples):
 
         vnc = self.vertices_no_cut(x)
         samples = []
-        for c in range(self.n):
+        for _ in range(num_samples):
             i = random.randint(0, self.n-1)
             j = random.randint(0, self.n-1)
             while x[i] == x[j] and not(any(i in l for l in vnc) or any(j in l for l in vnc)):
@@ -316,9 +316,6 @@ class GPP:
         else:
             y = self.first_improvement(x)
 
-        if y == x:
-            print('bro pilla mas samples')
-
         return y
 
 
@@ -328,10 +325,9 @@ class GPP:
 
         fx = self.f(x)
         if (fx > self.avg):
-            # If f(x) > f_avg we take the best in 100*n samples
             best = x
             fbest = fx
-            for _ in range(100*self.n):
+            for _ in range(int(self.n/10)):
                 y = self.random_neighbor(x)
                 fy = self.f(y)
                 if fy < fbest:
@@ -342,7 +338,7 @@ class GPP:
             if fx > self.avg_f_partial_neighborhood(x):
                 best = x
                 fbest = fx
-                for y in self.random_sample_partial_neighborhood(x):
+                for y in self.random_sample_partial_neighborhood(x, int(self.n/10)):
                     fy = self.f(y)
                     if fy < fbest:
                         best = y
@@ -350,9 +346,6 @@ class GPP:
                 y = best
             else:
                 y = self.first_improvement(x)
-
-        if y == x:
-            print('bro pilla mas samples')
 
         return y
 
