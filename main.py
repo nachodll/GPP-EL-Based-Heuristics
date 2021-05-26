@@ -14,7 +14,7 @@ def main():
     reps = 10
 
     for i in range(50):
-        filename = 'Johnson/' + 'G48.5-' + str(i)
+        filename = 'instances/' + 'G48.5-' + str(i)
         for k in ks:
             gpp = GPP.GPP(filename, k)
             for algo in algorithms:

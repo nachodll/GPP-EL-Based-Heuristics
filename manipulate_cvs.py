@@ -2,8 +2,8 @@ import csv
 import statistics as stats
 
 for k in [2, 3, 4]:
-    with open('final_results.csv', 'r', newline='') as results:
-        filename = 'mediansk' + str(k) + '.csv'
+    with open('results/final_results.csv', 'r', newline='') as results:
+        filename = 'results/mediansk' + str(k) + '.csv'
         with open(filename, 'w', newline='') as medians:
             reader = csv.DictReader(results, delimiter='\t')
             writer = csv.writer(medians, delimiter=',')
