@@ -3,8 +3,7 @@ import GPP
 def main():
 
     instances = [
-        'G62.08','G62.16',
-        'G62.32', 'G62.64'
+        'G500.02','G500.04'
     ]
     algorithms = [
         'BF', 'G', 
@@ -14,8 +13,8 @@ def main():
     ks = [2, 3, 4]
     reps = 10
 
-    for instance in instances:
-        filename = 'Johnson/' + instance
+    for i in range(50):
+        filename = 'Johnson/' + 'G48.5-' + str(i)
         for k in ks:
             gpp = GPP.GPP(filename, k)
             for algo in algorithms:
