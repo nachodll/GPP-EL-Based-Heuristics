@@ -21,7 +21,7 @@ library("scmamp")
 
 ## Load data
 setwd("C:/Repos/GPP-EL-Based-Heuristics")
-df <- read.csv("results/mediansk2.csv")
+df <- read.csv("results/medians48-k2.csv")
 
 ## Statistical Analysis
 df[,2:length(df)] <- df[,2:length(df)] * -1

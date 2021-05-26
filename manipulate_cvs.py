@@ -2,7 +2,7 @@ import csv
 import statistics as stats
 
 for k in [2, 3, 4]:
-    with open('results/final_results.csv', 'r', newline='') as results:
+    with open('results/results48.csv', 'r', newline='') as results:
         filename = 'results/mediansk' + str(k) + '.csv'
         with open(filename, 'w', newline='') as medians:
             reader = csv.DictReader(results, delimiter='\t')
