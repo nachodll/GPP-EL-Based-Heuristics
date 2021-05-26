@@ -25,11 +25,12 @@ def graph_to_file (G, filename):
         f.write(gstr)
     return
 
-# Create a random graph
-n = 250
-p = 0.64
-G = random_johnson_graph(n, p)
+for p in [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64]:
+    # Create a random graph
+    
+    n = 62
+    G = random_johnson_graph(n, p)
 
-# Save it
-filename = 'Johnson/G' + str(n) + '.' + str(p).split('.')[-1]
-graph_to_file(G, filename)
+    # Save it
+    filename = 'Johnson/G' + str(n) + '.' + str(p).split('.')[-1]
+    graph_to_file(G, filename)

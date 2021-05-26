@@ -94,6 +94,8 @@ class GPP:
                 cut_empty_edges += len(vnc[i]) * len(vnc[j])
         d = ((self.k-1) * self.n**2) / (2 * self.k)  
         d_p = d - cut_empty_edges
+        if d_p == 0:
+            return self.avg_f_neighborhood(x)
         
         # Count the number of weights not contributing to
         # the new neighborhood (iterate pair by pair of blocks)
