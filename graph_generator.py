@@ -25,11 +25,11 @@ def graph_to_file (G, filename):
         f.write(gstr)
     return
 
-for i in range(1, 51):
+for i in range(1, 4):
     # Create a random graph
     
-    n = 72
-    p = 0.75
+    n = 250
+    p = 0.64
     G = random_johnson_graph(n, p)
 
     # Save it
