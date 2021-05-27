@@ -5,3 +5,5 @@ simple.graph
 simple_multi.graph
 Walshaw/*
 .vscode/*
+.Rhistory
+.Rdata
