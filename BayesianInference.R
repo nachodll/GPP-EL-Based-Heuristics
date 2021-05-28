@@ -21,7 +21,7 @@ library("scmamp")
 
 ## Load data
 setwd("C:/Repos/GPP-EL-Based-Heuristics")
-df <- read.csv("results/medians48-k2.csv")
+df <- read.csv("results/medians124-k4.csv")
 
 ## Statistical Analysis
 df[,2:length(df)] <- df[,2:length(df)] * -1
@@ -31,6 +31,15 @@ pl_model$expected.win.prob
 
 ## Plot
 processed.results <- getCredibleIntervalsWeights(pl_model$posterior.weights, interval.size=0.9)
+processed.results
 df <- data.frame(Algorithm=rownames(processed.results), processed.results)
-ggplot(df, aes(y=Expected, ymin=Lower_bound, ymax=Upper_bound, x=Algorithm)) + geom_errorbar() + geom_point(col="darkgreen", size=2) +  theme_bw() + coord_flip() + labs(y="Probability of winning")
+ggplot(df, aes(y=Expected, ymin=Lower_bound, ymax=Upper_bound, x=Algorithm)) + 
+  geom_errorbar() + 
+  geom_point(col="darkgreen", size=2) +  
+  theme_bw() + 
+  theme(text = element_text(size=25),
+        axis.text.x = element_text(angle=0, hjust=1)) +
+  theme(aspect.ratio=4/10) +
+  coord_flip() + 
+  labs(y="Probability of winning")
 
