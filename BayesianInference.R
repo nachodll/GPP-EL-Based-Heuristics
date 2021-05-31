@@ -21,7 +21,7 @@ library("scmamp")
 
 ## Load data
 setwd("C:/Repos/GPP-EL-Based-Heuristics")
-df <- read.csv("results/medians124-k4.csv")
+df <- read.csv("results/250/medians250-k4.csv")
 
 ## Statistical Analysis
 df[,2:length(df)] <- df[,2:length(df)] * -1
@@ -41,5 +41,6 @@ ggplot(df, aes(y=Expected, ymin=Lower_bound, ymax=Upper_bound, x=Algorithm)) +
         axis.text.x = element_text(angle=0, hjust=1)) +
   theme(aspect.ratio=4/10) +
   coord_flip() + 
-  labs(y="Probability of winning")
+  labs(y="Probability of winning") +
+  expand_limits(x = 0, y = 0.5)
 

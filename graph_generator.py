@@ -27,7 +27,6 @@ def graph_to_file (G, filename):
 
 for i in range(1, 4):
     # Create a random graph
-    
     n = 250
     p = 0.64
     G = random_johnson_graph(n, p)

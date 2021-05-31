@@ -147,6 +147,8 @@ class GPP:
 
 
     def random_sample_partial_neighborhood (self, x, num_samples):
+        """Returns num_samples random neighbors of x
+        from the partial neighborhood""" 
 
         vnc = self.vertices_no_cut(x)
         samples = []
@@ -393,18 +395,10 @@ class GPP:
                     print('   f: ' + str(self.f(x)))
                     print('   Evaluations: ' + str(self.num_evals))
 
-        # Check if it halted but it was not a local optima
-        if (self.num_steps < self.max_evals):
-            y = self.first_improvement(x)
-            if y:
-                print('TEN CUIDAOOOOO')
-                print('Te has parao en '+ str(self.f(x)))
-                print('Pero había un vecino con ' + str(self.f(y)))
-
         # Write results into file
         used_time = time.time() - start_time
         graph_name = self.filename.split('/')[-1]
-        with open('results/results.csv', 'a', newline='') as results:
+        with open('results/results250.csv', 'a', newline='') as results:
             writer = csv.writer(results, delimiter = '\t')
             writer.writerow([
                 graph_name, self.k, algorithm, self.num_evals, 
