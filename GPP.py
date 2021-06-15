@@ -331,7 +331,7 @@ class GPP:
         if (fx > self.avg):
             best = x
             fbest = fx
-            for _ in range(int(self.n/10)):
+            for _ in range(int(100*self.n)):
                 y = self.random_neighbor(x)
                 fy = self.f(y)
                 if fy < fbest:
@@ -398,7 +398,7 @@ class GPP:
         # Write results into file
         used_time = time.time() - start_time
         graph_name = self.filename.split('/')[-1]
-        with open('results/results250.csv', 'a', newline='') as results:
+        with open('results/results.csv', 'a', newline='') as results:
             writer = csv.writer(results, delimiter = '\t')
             writer.writerow([
                 graph_name, self.k, algorithm, self.num_evals, 
